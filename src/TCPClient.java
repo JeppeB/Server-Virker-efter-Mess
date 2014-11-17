@@ -2,8 +2,13 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Scanner;
+
+import model.user.encryptionAES;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import JsonClasses.*;
 
 public class TCPClient {
@@ -14,6 +19,11 @@ public class TCPClient {
 		encryptionAES aes = new encryptionAES();
 		AuthUser authUser = new AuthUser();
 		Scanner userInput = new Scanner(System.in);
+		System.out.println("Indtast dit brugernavn :");
+		String brugernavn = userInput.nextLine();
+		authUser.setAuthUserEmail(brugernavn);
+		System.out.println("Indtast dit password : ");
+		
 		
 		
 		AuthUser A = new AuthUser();
