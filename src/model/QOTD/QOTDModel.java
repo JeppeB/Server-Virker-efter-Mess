@@ -22,7 +22,7 @@ import org.json.simple.parser.JSONParser;
 
 public class QOTDModel {
 
-	private ArrayList<QOTD> qotdlist = new ArrayList<>();
+	private ArrayList<QOTD> qotdlist = new ArrayList<QOTD>();
 	
 	QOTD qotdlist2 = new QOTD(null, null, null);
     QueryBuilder qb = new QueryBuilder();

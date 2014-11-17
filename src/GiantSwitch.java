@@ -1,5 +1,11 @@
+
 import java.sql.SQLException;
 
+/*
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+*/
 import model.QOTD.QOTDModel;
 import model.calendar.Event;
 import model.note.Note;
@@ -13,8 +19,7 @@ import com.google.gson.*;
 import databaseMethods.SwitchMethods;
 
 public class GiantSwitch {
-	
-	
+
 	
 	public String GiantSwitchMethod(String jsonString) throws SQLException {
 
@@ -24,6 +29,8 @@ public class GiantSwitch {
 		//ForecastModel forecastKlasse = new ForecastModel();
 		QOTDModel QOTDKlasse = new QOTDModel();
 		SwitchMethods SW = new SwitchMethods();
+		
+
 		
 		Gson gson = new GsonBuilder().create();
 		String answer = "";	
@@ -45,7 +52,12 @@ public class GiantSwitch {
 		case "logIn":
 			AuthUser AU = (AuthUser)gson.fromJson(jsonString, AuthUser.class);
 			System.out.println("Recieved logIn");
-			answer = SW.authenticate(AU.getAuthUserEmail(), AU.getAuthUserPassword(), AU.getAuthUserIsAdmin());
+			try {
+				answer = SW.authenticate(AU.getAuthUserEmail(), AU.getAuthUserPassword(), AU.getAuthUserIsAdmin());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
 		case "logOut":
