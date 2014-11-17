@@ -10,9 +10,14 @@ public class TCPClient {
 	public static void main(String[] args) throws Exception {
 		String modifiedSentence;
 		Gson gson = new GsonBuilder().create();
+		CreateCalendar CC = new CreateCalendar();
+		encryptionAES aes = new encryptionAES();
+		AuthUser authUser = new AuthUser();
+		Scanner userInput = new Scanner(System.in);
+		
 		
 		AuthUser A = new AuthUser();
-		A.setAuthUserEmail("admin@admin.dk");
+		A.setAuthUserEmail("");
 		A.setAuthUserIsAdmin(false);
 		A.setAuthUserPassword("d6YSr320JnLXlp8YYxUcNQ==");
 		String gsonString = gson.toJson(A);
