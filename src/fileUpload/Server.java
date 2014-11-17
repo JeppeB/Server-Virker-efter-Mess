@@ -13,7 +13,7 @@ class Server
     	OutputStream outStream = null;
     
         // Listen on port 5555 
-		ServerSocket server = new ServerSocket(5555);
+		ServerSocket server = new ServerSocket(8888);
 		
 		//accepter socket
         Socket sk = server.accept();
@@ -22,7 +22,7 @@ class Server
         BufferedReader inReader = new BufferedReader(new InputStreamReader(sk.getInputStream()));
         BufferedWriter outReader = new BufferedWriter(new OutputStreamWriter(sk.getOutputStream()));
  
-        //læser filnavnet som vi vil upload
+        //lï¿½ser filnavnet som vi vil upload
         String filename = inReader.readLine();
  
         if ( !filename.equals(""))
@@ -87,7 +87,7 @@ class Server
     	    sk.close();   	    
     	    //luk serversocket
     	    server.close();
-    	    //sletter originalen så vi ikke har 2
+    	    //sletter originalen sï¿½ vi ikke har 2
     	    File1.delete();
     	    
     	}catch(IOException e){

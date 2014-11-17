@@ -3,7 +3,7 @@ package JsonClasses;
 public class CreateCalendar implements java.io.Serializable
 {
 	private  final long serialVersionUID = 1L;
-	private String overallID = "createCalender";
+	private String overallID = "createCalendar";
 	private String calendarName;
 	private String userName;
 	private int publicOrPrivate;

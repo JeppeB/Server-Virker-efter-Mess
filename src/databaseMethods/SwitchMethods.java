@@ -21,30 +21,30 @@ public class SwitchMethods extends Model
 	 * @throws SQLException
 	 */
 
-	public String createNewCalender (String userName, String calenderName, int privatePublic) throws SQLException
+	public String createNewCalendar (String userName, String calendarName, int privatePublic) throws SQLException
 	{
 		String stringToBeReturned ="";
 		testConnection();
-		if(authenticateNewCalender(calenderName) == false)
+		if(authenticateNewCalendar(calendarName) == false)
 		{
-			addNewCalender(calenderName, userName, privatePublic);
-			stringToBeReturned = "The new calender has been created!";
+			addNewCalendar(calendarName, userName, privatePublic);
+			stringToBeReturned = "The new calendar has been created!";
 		}
 		else
 		{
-			stringToBeReturned = "The new calender has not been created!";
+			stringToBeReturned = "The new calendar has not been created!";
 		}
 		
 		
 		return stringToBeReturned;
 	}
 	
-	public boolean authenticateNewCalender(String newCalenderName) throws SQLException
+	public boolean authenticateNewCalendar(String newCalendarName) throws SQLException
 	{
 		getConn();
 		boolean authenticate = false;
 		
-		resultSet= qb.selectFrom("calendar").where("name", "=", newCalenderName).ExecuteQuery();
+		resultSet= qb.selectFrom("calendar").where("name", "=", newCalendarName).ExecuteQuery();
 				
 				//("select * from test.calender where Name = '"+newCalenderName+"';");
 		while(resultSet.next())
@@ -54,11 +54,11 @@ public class SwitchMethods extends Model
 		return authenticate;
 	}
 	
-	public void addNewCalender (String newCalenderName, String userName, int publicOrPrivate) throws SQLException
+	public void addNewCalendar (String newCalendarName, String userName, int publicOrPrivate) throws SQLException
 	{
 		String [] keys = {"Name","active","CreatedBy","PrivatePublic"};
-		String [] values = {newCalenderName,"1",userName, Integer.toString(publicOrPrivate)};
-		qb.update("calendar", keys, values).all().Execute();
+		String [] values = {newCalendarName,"1",userName, Integer.toString(publicOrPrivate)};
+		qb.insertInto("calendar", keys).values(values).Execute();
 		
 //		doUpdate("insert into test.calender (Name, Active, CreatedBy, PrivatePublic) VALUES ('"+newCalenderName+"', '1', '"+userName+"', '"+publicOrPrivate+"');");
 	}
@@ -68,31 +68,31 @@ public class SwitchMethods extends Model
 	 * @param calenderName
 	 * @return
 	 */
-	public String deleteCalender (String userName, String calenderName) throws SQLException
+	public String deleteCalendar (String userName, String calendarName) throws SQLException
 	{
 		String stringToBeReturned ="";
 		testConnection();
-		stringToBeReturned = removeCalender(userName, calenderName);
+		stringToBeReturned = removeCalendar(userName, calendarName);
 
 		return stringToBeReturned;
 	}
 	
-	public String removeCalender (String userName, String calenderName) throws SQLException
+	public String removeCalendar (String userName, String calendarName) throws SQLException
 	{
 		String stringToBeReturend = "";
 		String usernameOfCreator ="";
-		String calenderExists = "";
-		resultSet = qb.selectFrom("Calender").where("Name", "=", calenderName).ExecuteQuery();
+		String calendarExists = "";
+		resultSet = qb.selectFrom("Calendar").where("Name", "=", calendarName).ExecuteQuery();
 				
 //				("select * from calender where Name = '"+calenderName+"';");
 		while(resultSet.next())
 		{
-			calenderExists = resultSet.toString();
+			calendarExists = resultSet.toString();
 		}
-		if(!calenderExists.equals(""))
+		if(!calendarExists.equals(""))
 		{
 			String [] value = {"CreatedBy"};
-			resultSet = qb.selectFrom(value, "Calender").where("Name", "=", calenderName).ExecuteQuery();
+			resultSet = qb.selectFrom(value, "Calendar").where("Name", "=", calendarName).ExecuteQuery();
 			while(resultSet.next())
 			{
 				usernameOfCreator = resultSet.toString();
@@ -106,7 +106,7 @@ public class SwitchMethods extends Model
 			{
 				String [] keys = {"Active"};
 				String [] values = {"2"};
-				qb.update("Calendar", keys, values).where("Name", "=", calenderName).Execute();
+				qb.update("Calendar", keys, values).where("Name", "=", calendarName).Execute();
 				stringToBeReturend = "Calender has been set inactive";
 			}
 			stringToBeReturend = resultSet.toString();

@@ -23,16 +23,12 @@ public class TCPClient {
 		String brugernavn = userInput.nextLine();
 		authUser.setAuthUserEmail(brugernavn);
 		System.out.println("Indtast dit password : ");
-		
-		
-		
-		AuthUser A = new AuthUser();
-		A.setAuthUserEmail("");
-		A.setAuthUserIsAdmin(false);
-		A.setAuthUserPassword("d6YSr320JnLXlp8YYxUcNQ==");
-		String gsonString = gson.toJson(A);
-		System.out.println(A);
+		String password = aes.encrypt(userInput.nextLine());
+		authUser.setAuthUserPassword(password);
+		String gsonString = gson.toJson(authUser);
+		System.out.println(authUser);
 		System.out.println(gsonString);
+		
 
 		Socket clientSocket = new Socket("localhost", 8888);
 		DataOutputStream outToServer = new DataOutputStream(
@@ -43,6 +39,7 @@ public class TCPClient {
 		for (int i = 0; i < encrypted.length; i++)
 			encrypted[i] = (byte) (encrypted[i] ^ key);
 
+		System.out.println(encrypted);
 		outToServer.write(encrypted);
 		outToServer.flush();
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(

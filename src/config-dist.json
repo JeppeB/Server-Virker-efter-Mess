@@ -1,6 +1,6 @@
 {
-	"host": "54.172.101.85",
-	"port": "3306",
+	"host": "localhost",
+	"port": "8888",
 	"username": "root",
 	"password": "doekdoek",	
 	"ffcryptkey": "3.1470",
