@@ -155,7 +155,7 @@ public abstract class Model {
     	if(init) {
     		setConn(DriverManager.getConnection(sqlUrl, sqlUser, sqlPasswd));
     	}else{
-    		setConn(DriverManager.getConnection(sqlUrl+"/"+dbName, sqlUser, sqlPasswd));
+    		setConn(DriverManager.getConnection(sqlUrl+dbName, sqlUser, sqlPasswd));
     	}
     }
 

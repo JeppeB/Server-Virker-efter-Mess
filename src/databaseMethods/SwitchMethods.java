@@ -133,7 +133,7 @@ public class SwitchMethods extends Model
 	 */
 	public String authenticate(String email, String password, boolean isAdmin) throws Exception {
 
-		String[] keys = {"userid", "email", "active", "password"};
+		String[] keys = {"userid", "email", "active", "password", "isAdmin"};
 
 		qb = new QueryBuilder();
 
@@ -147,29 +147,40 @@ public class SwitchMethods extends Model
 			if(resultSet.getInt("active")==1)
 			{					
 				// Hvis passwords matcher
-				if(resultSet.getString("password").equals(password))
+				if(resultSet.getString("password").equals(password) && isAdmin)
 				{
 					int userID = resultSet.getInt("userid");
-
-					String[] key = {"type"};
-
-					resultSet = qb.selectFrom(key, "roles").where("userid", "=", new Integer(userID).toString()).ExecuteQuery();
-
-					// Hvis brugeren baade logger ind og er registreret som admin, eller hvis brugeren baade logger ind og er registreret som bruger
-					if((resultSet.getString("type").equals("admin") && isAdmin) || (resultSet.getString("type").equals("user") && !isAdmin))
-					{
-						return "0"; // returnerer "0" hvis bruger/admin er godkendt
-					} else {
-						return "4"; // returnerer fejlkoden "4" hvis brugertype ikke stemmer overens med loginplatform
+					
+					if (resultSet.getString("isAdmin").equals("admin")){
+						return "0";
+					} else if (resultSet.getString("isAdmin").equals("") && !isAdmin){
+						return "1";
 					}
-				} else {
-					return "3"; // returnerer fejlkoden "3" hvis password ikke matcher
 				}
-			} else {
-				return "2"; // returnerer fejlkoden "2" hvis bruger er sat som inaktiv
 			}
-		} else {
-			return "1"; // returnerer fejlkoden "1" hvis email ikke findes
 		}
+//					String[] key = {"type"};
+//
+//					resultSet = qb.selectFrom(key, "users").where("userid", "=", new Integer(userID).toString()).ExecuteQuery();
+//
+//					// Hvis brugeren baade logger ind og er registreret som admin, eller hvis brugeren baade logger ind og er registreret som bruger
+//					
+//					
+//					if((resultSet.getString("type").equals("'admin'") && isAdmin) || (resultSet.getString("type").equals("'user'") && !isAdmin))
+//					{
+//						return "0"; // returnerer "0" hvis bruger/admin er godkendt
+//					} else {
+//						return "4"; // returnerer fejlkoden "4" hvis brugertype ikke stemmer overens med loginplatform
+//					}
+//				} else {
+//					return "3"; // returnerer fejlkoden "3" hvis password ikke matcher
+//				}
+//			} else {
+//				return "2"; // returnerer fejlkoden "2" hvis bruger er sat som inaktiv
+//			}
+//		} else {
+//			return "1"; // returnerer fejlkoden "1" hvis email ikke findes
+//		}
+		return "3";
 	}
 }

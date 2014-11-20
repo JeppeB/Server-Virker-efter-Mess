@@ -4,9 +4,9 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Create Tables */
 
-CREATE TABLE IF NOT EXISTS Calender
+CREATE TABLE IF NOT EXISTS calendar
 (
-	CalenderID int NOT NULL AUTO_INCREMENT,
+	calendarID int NOT NULL AUTO_INCREMENT,
 	Name varchar(255) NOT NULL,
 	Active tinyint,
 	CreatedBy varchar(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Calender
 	-- 2 = private
 	PrivatePublic tinyint NOT NULL COMMENT '1 = public
 	2 = private',
-	PRIMARY KEY (CalenderID)
+	PRIMARY KEY (calendarID)
 );
 
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS events
 	-- 
 	customevent boolean COMMENT 'Decides wether the event is an import-event or user created
 ',
-	CalenderID int NOT NULL,
+	calendarID int NOT NULL,
 	PRIMARY KEY (eventid)
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS roles
 CREATE TABLE IF NOT EXISTS userevents
 (
 	userid int NOT NULL,
-	CalenderID int NOT NULL
+	calendarID int NOT NULL
 );
 
 
@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS users
 	active boolean,
 	created datetime NOT NULL DEFAULT NOW(),
 	password varchar(200) NOT NULL,
+	isAdmin boolean NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (userid)
 );
 
@@ -102,26 +103,27 @@ CREATE TABLE IF NOT EXISTS users
 INSERT INTO `cbscalendar`.`users`
 (`email`,
 `active`,
-`password`)
+`password`,
+'isAdmin')
 VALUES
 ("admin@admin.dk",
 true,
-"d6YSr320JnLXlp8YYxUcNQ==");
+"d6YSr320JnLXlp8YYxUcNQ==", true);
 
 
 
 /* Create Foreign Keys */
 
 ALTER TABLE events
-	ADD FOREIGN KEY (CalenderID)
-	REFERENCES Calender (CalenderID)
+	ADD FOREIGN KEY (calendarID)
+	REFERENCES calendar (calendarID)
 	ON UPDATE RESTRICT
 ;
 
 
 ALTER TABLE userevents
-	ADD FOREIGN KEY (CalenderID)
-	REFERENCES Calender (CalenderID)
+	ADD FOREIGN KEY (calendarID)
+	REFERENCES calendar (calendarID)
 	ON UPDATE RESTRICT
 ;
 
@@ -174,9 +176,9 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Create Tables */
 
-CREATE TABLE IF NOT EXISTS Calender
+CREATE TABLE IF NOT EXISTS calendar
 (
-	CalenderID int NOT NULL AUTO_INCREMENT,
+	calendarID int NOT NULL AUTO_INCREMENT,
 	Name varchar(255) NOT NULL,
 	Active tinyint,
 	CreatedBy varchar(255) NOT NULL,
@@ -184,7 +186,7 @@ CREATE TABLE IF NOT EXISTS Calender
 	-- 2 = private
 	PrivatePublic tinyint NOT NULL COMMENT '1 = public
 	2 = private',
-	PRIMARY KEY (CalenderID)
+	PRIMARY KEY (calendarID)
 );
 
 
@@ -213,7 +215,7 @@ CREATE TABLE IF NOT EXISTS events
 	-- 
 	customevent boolean COMMENT 'Decides wether the event is an import-event or user created
 ',
-	CalenderID int NOT NULL,
+	calendarID int NOT NULL,
 	PRIMARY KEY (eventid)
 );
 
@@ -250,7 +252,7 @@ CREATE TABLE IF NOT EXISTS roles
 CREATE TABLE IF NOT EXISTS userevents
 (
 	userid int NOT NULL,
-	CalenderID int NOT NULL
+	calendarID int NOT NULL
 );
 
 
@@ -269,15 +271,15 @@ CREATE TABLE IF NOT EXISTS users
 /* Create Foreign Keys */
 
 ALTER TABLE events
-	ADD FOREIGN KEY (CalenderID)
-	REFERENCES Calender (CalenderID)
+	ADD FOREIGN KEY (calendarID)
+	REFERENCES calendar (calendarID)
 	ON UPDATE RESTRICT
 ;
 
 
 ALTER TABLE userevents
-	ADD FOREIGN KEY (CalenderID)
-	REFERENCES Calender (CalenderID)
+	ADD FOREIGN KEY (calendarID)
+	REFERENCES calendar (calendarID)
 	ON UPDATE RESTRICT
 ;
 

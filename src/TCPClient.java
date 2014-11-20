@@ -19,12 +19,17 @@ public class TCPClient {
 		encryptionAES aes = new encryptionAES();
 		AuthUser authUser = new AuthUser();
 		Scanner userInput = new Scanner(System.in);
+		Scanner userInput2 = new Scanner(System.in);
 		System.out.println("Indtast dit brugernavn :");
 		String brugernavn = userInput.nextLine();
 		authUser.setAuthUserEmail(brugernavn);
 		System.out.println("Indtast dit password : ");
-		String password = aes.encrypt(userInput.nextLine());
+//		String password = aes.encrypt(userInput.nextLine());
+		String password = userInput2.nextLine();
 		authUser.setAuthUserPassword(password);
+		if(brugernavn.equalsIgnoreCase("mads@cbs.dk")){
+			authUser.setAuthUserIsAdmin(true);
+		}
 		String gsonString = gson.toJson(authUser);
 		System.out.println(authUser);
 		System.out.println(gsonString);
