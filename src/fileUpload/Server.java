@@ -13,7 +13,7 @@ class Server
     	OutputStream outStream = null;
     
         // Listen on port 5555 
-		ServerSocket server = new ServerSocket(8888);
+		ServerSocket server = new ServerSocket(5555);
 		
 		//accepter socket
         Socket sk = server.accept();
